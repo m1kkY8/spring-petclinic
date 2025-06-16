@@ -10,7 +10,9 @@ pipeline {
 
   stages {
     stage('checkStyle') {
-      when { not {branch 'main' }}
+      when { 
+        expression { env.CHANGE_ID }
+      }
       steps {
         echo "Syle Check"
         sh './gradlew checkstyleMain'
@@ -18,7 +20,9 @@ pipeline {
     }
 
     stage('Test') {
-      when { not {branch 'main' }}
+      when { 
+        expression { env.CHANGE_ID }
+      }
       steps {
         echo "Running tests"
         sh './gradlew test'
